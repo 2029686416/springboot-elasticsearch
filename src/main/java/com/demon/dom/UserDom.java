@@ -18,7 +18,7 @@ public class UserDom  implements java.io.Serializable{
     private Integer id;
     @Field(type = FieldType.Text)
     private String name;
-    @Field(type = FieldType.Text)
+    @Field(type = FieldType.Long)
     private Integer age;
 
     public Integer getId() {

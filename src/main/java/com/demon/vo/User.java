@@ -12,7 +12,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 public class User {
     private String id;
     private String name;
-    private Integer age = 0;
+    private Integer age ;
     private String introduce;
 
 
