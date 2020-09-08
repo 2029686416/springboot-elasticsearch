@@ -1,11 +1,14 @@
 package com.demon.serviceimp;
 
+import com.demon.dom.UserDom;
+import com.demon.repository.UserRespository;
 import com.demon.service.EsService;
 import com.demon.vo.User;
 import com.github.pagehelper.PageInfo;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.stereotype.Service;
@@ -20,6 +23,9 @@ public class EsServiceImpl extends PublicQueryServiceImpl  implements EsService 
     private Logger logger = LoggerFactory.getLogger(EsServiceImpl.class);
     private final static String indic="test1";
     private final static String type="type1";
+
+    @Autowired
+    private UserRespository userRespository;
 
     @Override
     public PageInfo<User> selectPage(User entity) {
@@ -38,6 +44,19 @@ public class EsServiceImpl extends PublicQueryServiceImpl  implements EsService 
 //		resPage.setTotal(page.getTotalElements());
 //		resPage.setList(page.getContent());
         return resPage;
+    }
+
+   /* @Override
+    public UserDom selectById(User entity) {
+        UserDom dom = new UserDom();
+        dom.setId(Integer.valueOf(entity.getId()));
+        return userRespository.findById(dom.getId()).get();
+    }*/
+
+    @Override
+    public int insertUser(UserDom userDom) {
+        userRespository.save(userDom);
+        return 1;
     }
 
 }

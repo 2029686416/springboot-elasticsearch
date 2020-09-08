@@ -1,29 +1,33 @@
-package com.demon.vo;
+package com.demon.dom;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  * @description: TODO
  * @author: liuhao
- * @create: 2020/8/27 17:08
+ * @create: 2020/9/7 17:00
  */
-public class User {
-    private String id;
+@Document(indexName = "test1",type = "type1")
+public class UserDom  implements java.io.Serializable{
+    private static final long serialVersionUID = 5454155825314635341L;
+
+    @Id
+    private Integer id;
+    @Field(type = FieldType.Text)
     private String name;
-    private Integer age = 0;
-    private String introduce;
+    @Field(type = FieldType.Text)
+    private Integer age;
 
-
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
@@ -38,13 +42,5 @@ public class User {
 
     public void setAge(Integer age) {
         this.age = age;
-    }
-
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
     }
 }

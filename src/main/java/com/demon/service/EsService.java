@@ -1,5 +1,6 @@
 package com.demon.service;
 
+import com.demon.dom.UserDom;
 import com.demon.vo.User;
 import com.github.pagehelper.PageInfo;
 
@@ -11,5 +12,9 @@ import com.github.pagehelper.PageInfo;
 public interface EsService{
 
     PageInfo<User> selectPage(User entity);
+
+//    UserDom selectById(User entity);
+
+    int insertUser(UserDom userDom);
 
 }
