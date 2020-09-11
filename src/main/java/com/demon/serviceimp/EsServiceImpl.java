@@ -8,11 +8,13 @@ import com.demon.util.JsonUtils;
 import com.demon.vo.User;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.beanutils.BeanUtils;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.Client;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
@@ -68,12 +70,23 @@ public class EsServiceImpl extends PublicQueryServiceImpl  implements EsService 
     }
 
     @Override
+    public List<UserDom> IndexResponse(UserDom entity) {
+//        String json = JSONObject.toJSON(entity).toString();
+//        IndexResponse response = client.prepareIndex("test1","type1")
+//                .setSource(json, XContentType.JSON)
+//                .execute().actionGet();
+//        System.out.println(response.status());
+        return null;
+    }
+
+    @Override
     public PageInfo<User> selectPage(User entity) {
+        //构建查询条件
         NativeSearchQueryBuilder queryBuilder = new NativeSearchQueryBuilder();
         queryBuilder
                 .withIndices(indic)
                 .withTypes(type)
-                .withQuery(QueryBuilders.matchQuery("id",1));
+                .withQuery(QueryBuilders.matchQuery("id",1));//匹配查询
         //.withPageable(PageRequest.of(0, 10,Sort.by(Direction.DESC, "jhzxsj","tjsj")));//分页加排序
         PageInfo<User> resPage = queryForPage(queryBuilder, 1,10, null, Sort.Direction.DESC, User.class);
 

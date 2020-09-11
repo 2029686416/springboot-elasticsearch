@@ -6,10 +6,10 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 
-@Configurable
+//@Configurable
 public class ElasticSearchClientConfig {
 
-    @Bean
+//    @Bean
     public RestHighLevelClient restHigtLevelClient(){
         RestHighLevelClient client = new RestHighLevelClient(
                 RestClient.builder(

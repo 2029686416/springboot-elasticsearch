@@ -36,6 +36,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * 包冲突，将方法提取出来
+ */
 @Component
 public class EsResultMapping extends AbstractResultMapper {//DefaultResultMapper
 

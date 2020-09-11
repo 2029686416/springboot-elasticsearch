@@ -6,8 +6,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import com.demon.config.EsResultMapping;
+import com.demon.config.EsTemplate;
 import com.demon.util.JsonUtils;
-import com.demon.vo.EsTemplate;
 import org.elasticsearch.action.search.ClearScrollRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -80,6 +80,7 @@ public class PublicQueryServiceImpl {
         //queryBuilder.ag
         logger.info("DSL:=====>{}",queryBuilder.build().getQuery().toString());
         Page<T> page = elasticsearchTemplate.queryForPage(queryBuilder.build(),clazz,esResultMapping);
+//        Page<T> page = elasticsearchTemplate.queryForPage(queryBuilder.build(),clazz);
         PageInfo<T> resPage = new PageInfo<>();
         resPage.setPageNum(pages==0?1:pages);
         resPage.setPageSize(page.getSize());
@@ -148,6 +149,7 @@ public class PublicQueryServiceImpl {
         long total = 0l;
         String indice=null;
         try {
+            //获取index索引
             indice = queryBuilder.build().getIndices().get(0);
         } catch (Exception e) {
             e.printStackTrace();

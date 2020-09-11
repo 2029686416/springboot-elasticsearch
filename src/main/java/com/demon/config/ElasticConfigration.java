@@ -92,7 +92,8 @@ public class ElasticConfigration {
         	String ip = host.split(":")[0];
         	int port = Integer.parseInt(host.split(":")[1]);
         	//client.addTransportAddress(new TransportAddress(InetAddress.getByName(host), esPort));
-        	client.addTransportAddress(new TransportAddress(InetAddress.getByName(ip), port));
+        	//TransportClient方式连接集群
+           client.addTransportAddress(new TransportAddress(InetAddress.getByName(ip), port));
  	   }
         
         

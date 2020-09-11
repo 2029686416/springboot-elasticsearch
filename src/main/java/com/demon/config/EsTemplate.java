@@ -74,7 +74,9 @@ import static org.springframework.util.CollectionUtils.isEmpty;
 //import org.springframework.data.elasticsearch.core.CriteriaQueryProcessor;
 //import org.springframework.data.elasticsearch.core.ResourceUtil;
 //import org.springframework.data.elasticsearch.core.StreamQueries;
-
+/**
+ * 包冲突，将方法提取出来
+ */
 public class EsTemplate extends ElasticsearchTemplate {
 
 	private static final Logger QUERY_LOGGER = LoggerFactory

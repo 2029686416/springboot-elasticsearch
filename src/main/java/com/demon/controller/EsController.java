@@ -25,6 +25,13 @@ public class EsController {
     @Autowired
     private EsService esService;
 
+    @RequestMapping(value = "/test", method = {RequestMethod.POST},
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<UserDom> test(@RequestBody UserDom entity, HttpServletRequest request) {
+        List<UserDom> list=esService.IndexResponse(entity);
+        return list;
+    }
+
     @RequestMapping(value = "/selectlist", method = {RequestMethod.POST},
             produces = MediaType.APPLICATION_JSON_VALUE)
     public List<UserDom> selectRobotAlertlist(@RequestBody UserDom entity, HttpServletRequest request) {

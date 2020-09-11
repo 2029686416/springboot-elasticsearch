@@ -14,6 +14,8 @@ import java.util.List;
 public interface EsService{
     List<UserDom> selectUsertlist(UserDom entity);
 
+    List<UserDom> IndexResponse(UserDom entity);
+
     PageInfo<User> selectPage(User entity);
 
     UserDom selectById(UserDom entity);
