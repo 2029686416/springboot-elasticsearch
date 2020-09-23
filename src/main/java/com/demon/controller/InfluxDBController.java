@@ -1,7 +1,7 @@
 package com.demon.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.demon.config.InfluxDBConfig;
+import com.demon.influxdb.InfluxDBConfig;
 import com.demon.vo.TrackPoint;
 import org.apache.commons.beanutils.BeanUtils;
 import org.influxdb.InfluxDB;

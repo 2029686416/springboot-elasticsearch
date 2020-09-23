@@ -1,4 +1,4 @@
-package com.demon.config;
+package com.demon.influxdb;
 
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
