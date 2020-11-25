@@ -9,6 +9,7 @@ import com.demon.vo.User;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -18,6 +19,10 @@ import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +63,7 @@ public class EsServiceImpl extends PublicQueryServiceImpl  implements EsService 
                 //.setQuery(QueryBuilders.termQuery("dbptbh", entity.getDbptbh())) // Query
                 //.setPostFilter(QueryBuilders.rangeQuery("age").from(2).to(11)) // Filter
                 .setFrom(0).setSize(10)
+                .addSort("age", SortOrder.DESC)
                 .setExplain(true).execute().actionGet();
         SearchHits hits = response.getHits();
         List<UserDom> list = new ArrayList<>();
@@ -79,6 +85,31 @@ public class EsServiceImpl extends PublicQueryServiceImpl  implements EsService 
         return null;
     }
 
+    @Override
+    public int selectfz(User entity) {
+        //根据 任务id分组进行求和
+        SearchRequestBuilder sbuilder = client.prepareSearch(indic).setTypes(type);//根据taskid进行分组统计，统计出的列别名叫sum
+        TermsAggregationBuilder termsBuilder = AggregationBuilders.terms("age").field("age");//第一个age是别名 as age
+        sbuilder.addAggregation(termsBuilder);
+        SearchResponse responses= sbuilder.execute().actionGet();
+//得到这个分组的数据集合
+        Terms terms = responses.getAggregations().get("age");//对应terms("age") 聚合结果
+        List<User> lists = new ArrayList<>();
+        for(int i=0;i<terms.getBuckets().size();i++){
+            //statistics
+            String id =terms.getBuckets().get(i).getKey().toString();//id
+            Long sum =terms.getBuckets().get(i).getDocCount();//数量
+            logger.info("字段"+terms.getBuckets().get(i).getKey()+"总数："+terms.getBuckets().get(i).getDocCount());
+        }//分别打印出统计的数量和id值
+        Terms termss = (Terms) responses.getAggregations().asMap().get("age");
+        // 遍历取出聚合字段列的值，与对应的数量
+        for (Terms.Bucket bucket : termss.getBuckets()) {
+            String keyAsString = bucket.getKeyAsString(); // 聚合字段列的值
+            long docCount = bucket.getDocCount();// 聚合字段对应的数量
+            System.out.println("keyAsString="+keyAsString+",value="+docCount);
+        }
+        return 1;
+    }
     @Override
     public PageInfo<User> selectPage(User entity) {
         //构建查询条件

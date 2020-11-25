@@ -18,6 +18,8 @@ public interface EsService{
 
     PageInfo<User> selectPage(User entity);
 
+    int selectfz(User entity);
+
     UserDom selectById(UserDom entity);
 
     int insertUser(UserDom userDom);

@@ -45,6 +45,12 @@ public class EsController {
         return pageInfo;
     }
 
+    //分组查看
+    @RequestMapping("/fz")
+    public int selectfz(@RequestBody User user){
+        return esService.selectfz(user);
+    }
+
     @RequestMapping(value = "/selectById", method = {RequestMethod.POST},
             produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDom selectById(@RequestBody UserDom entity,HttpServletRequest request) {
